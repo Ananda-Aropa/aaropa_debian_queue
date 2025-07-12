@@ -37,5 +37,3 @@ jobs:
           ref: ${{ env.REF }}
           trigger_workflow: true
           wait_workflow: false
-      - name: Check out
-        run: s
