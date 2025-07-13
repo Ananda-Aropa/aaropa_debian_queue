@@ -34,6 +34,6 @@ jobs:
           github_token: ${{ env.PAT }}
           github_user: ${{ env.AUTHOR }}
           workflow_file_name: deploy-pages.yml
-          ref: ${{ env.REF }}
+          ref: main
           trigger_workflow: true
           wait_workflow: false
