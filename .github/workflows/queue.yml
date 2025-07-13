@@ -3,7 +3,7 @@ name: Package builder queue
 on:
   push:
     branches:
-      - main
+      - devel
   workflow_dispatch:
 
 env:
