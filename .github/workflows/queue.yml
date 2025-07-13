@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  REF: ${{ github.ref }}
+  AUTHOR: ${{ secrets.RELEASE_USERNAME }}
+  PAT: ${{ secrets.RELEASE_TOKEN }}
+
 jobs:
   build:
     strategy:
@@ -15,3 +20,20 @@ jobs:
     steps:
       - name: Check out
         uses: actions/checkout@v4
+
+      - name: Set up environment
+        run: |
+          echo "QUEUE_COUNT=$(find . -maxdepth 1 -type f | wc -l)" >> $GITHUB_ENV
+
+      - name: Trigger Workflow and Wait
+        if: env.QUEUE_COUNT == 0
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: Ananda-Aropa
+          repo: aaropa_deb_repo_testing
+          github_token: ${{ env.PAT }}
+          github_user: ${{ env.AUTHOR }}
+          workflow_file_name: deploy-pages.yml
+          ref: ${{ env.REF }}
+          trigger_workflow: true
+          wait_workflow: false
